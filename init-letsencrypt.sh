@@ -67,7 +67,9 @@ esac
 if [ $staging != "0" ]; then staging_arg="--staging"; fi
 
 docker-compose run --rm --entrypoint "\
-  certbot certonly --webroot -w /var/www/certbot \
+  certbot certonly \
+    -a dns-multi --dns-multi-credentials /etc/letsencrypt/dns-multi.ini \
+    --dns-multi-propagation-seconds 120 \
     $staging_arg \
     $email_arg \
     $domain_args \
